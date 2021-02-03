@@ -5,7 +5,7 @@
 import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from '@apollo/client';
 import { useAuthToken } from "./auth";
 
-export const uri = "https://domain.pamosystems.com";
+export const uri = "https://butik-api.pamosystems.com";
 
 const httpLink = new HttpLink({ 
     uri: `${uri}/graphql`,

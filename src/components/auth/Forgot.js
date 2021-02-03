@@ -9,7 +9,7 @@ import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import useStyles from './Styles';
 
 const Forgot = () => {
-    const title = "Glömt lösenord",
+    const title = "Glömt pin",
           [email, setEmail] = useState(""),
           messageContext = useMessage(),
           setMessage = messageContext.setMessage,
@@ -46,7 +46,7 @@ const Forgot = () => {
 
             <Grid container spacing={4} justify="center" className="page">
                 <Grid item xs={12} md={6}>
-                    <h2 className="center">Mata in din epost address nedan för att återställa lösenordet.</h2>
+                    <h2 className="center">Mata in din epost address nedan för att återställa pinkoden.</h2>
 
                     <form className="form" onSubmit={registerSubmit}>
                         <TextField

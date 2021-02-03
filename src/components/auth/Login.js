@@ -25,11 +25,11 @@ const Login = () => {
         const formData = new FormData(e.target);
 
         let person = {
-            "email": formData.get("email"),
+            "username": formData.get("username"),
             "password": formData.get("password")
         };
 
-        login(person.email, person.password)
+        login(person.username, person.password)
             .catch(error => { 
                 console.log(error);
                 setMessage({ open: true, text: "Ogiltid epost eller lösenord!", severity: "error" });
@@ -51,10 +51,10 @@ const Login = () => {
                 <Grid item xs={12} sm={6}>
                     <form className="form" onSubmit={logon}>
                         <TextField
-                            id="person-email"
-                            name="email"
-                            label="Epost"
-                            type="email"
+                            id="person-username"
+                            name="username"
+                            label="Tag"
+                            type="number"
                             size="small"
                             variant="filled"
                             required
@@ -65,7 +65,7 @@ const Login = () => {
                             className="password"
                             id="person-password"
                             name="password"
-                            label="Lösenord"
+                            label="Pin"
                             type={hidden ? "password" : "text"}
                             size="small"
                             variant="filled"
@@ -82,7 +82,7 @@ const Login = () => {
                                     style={{ color: "white" }}
                                 />
                             }
-                            label={`${check ? "Dölja" : "Visa"} lösenord`}
+                            label={`${check ? "Dölja" : "Visa"} pin`}
                         />
                         
                         <Button
@@ -103,7 +103,7 @@ const Login = () => {
                             variant="contained"
                             onClick={() => history.push("/forgot")}
                         >
-                            Glömt Lösenord?
+                            Glömt pin?
                         </Button>
                     </form>
                 </Grid>
