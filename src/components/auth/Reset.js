@@ -10,7 +10,7 @@ import { Grid, Typography, TextField, Button, FormControlLabel, Checkbox } from 
 import useStyles from './Styles';
 
 const Reset = () => {
-    const title = "Återställ lösenord",
+    const title = "Återställ pinkod",
           [hidden, setHidden] = useState(true),
           [check, setCheck] = useState(true),
           code = new URLSearchParams(useLocation().search).get("code"),
@@ -38,7 +38,7 @@ const Reset = () => {
 
                 history.push("/login");
 
-                setMessage({ open: true, text: "Klart, logga nu in med det nya lösenordet!", severity: "success" });
+                setMessage({ open: true, text: "Klart, logga nu in med den nya pinkod!", severity: "success" });
 
                 return true;
             });
@@ -57,14 +57,14 @@ const Reset = () => {
 
             <Grid container spacing={4} alignContent="center" justify="center" className="page">
                 <Grid item xs={12} md={6}>
-                    <h2 className="center">Skriv ditt nya lösenordet nedan.</h2>
+                    <h2 className="center">Skriv ditt nya pinkod nedan.</h2>
 
                     <form className="form" onSubmit={registerSubmit}>
                         <TextField
                             className="password"
                             id="person-password"
                             name="password"
-                            label="Nya lösenordet"
+                            label="Nya pinkod"
                             size="small"
                             variant="filled"
                             type={hidden ? "password" : "text"}
@@ -81,7 +81,7 @@ const Reset = () => {
                                     style={{ color: "white" }}
                                 />
                             }
-                            label={`${check ? "Visa" : "Dölja"} lösenord`}
+                            label={`${check ? "Visa" : "Dölja"} pinkod`}
                         />
 
                         <Button
