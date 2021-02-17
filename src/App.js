@@ -11,7 +11,7 @@ import { LoadingProvider, Loading } from "components/loading/Loading";
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 import theme from './theme/Default';
-import { FilterProvider } from "components/filter/Filter";
+import { ItemsProvider } from "components/items/Items";
 import { MessageProvider } from "components/messageSystem/Message";
 import MessageSystem from "components/messageSystem/MessageSystem";
 
@@ -31,7 +31,6 @@ import PrivateRoute from 'components/auth/PrivateRoute';
 const App = () => {
     const apolloClient = useAppApolloClient();
     const [message, setMessage] = useState({ open: false, text: "", severity: "" });
-    const [filters, setFilters] = useState({});
 
     return (
         <ThemeProvider theme={theme}>
@@ -40,21 +39,19 @@ const App = () => {
                 <ApolloProvider client={apolloClient}>
                     <LoadingProvider>
                         <MessageProvider value={{ message, setMessage }}>
-                            <FilterProvider value={{ filters, setFilters }}>
-                                <Router>
-                                    <Loading />
-                                    <Header />
-                                    <Switch>
-                                        <PrivateRoute exact path="/" Component={Start} />
-                                        <PublicRoute exact path="/login" Component={Login} />
-                                        <PrivateRoute exact path="/logout" Component={Logout} />
-                                        <PublicRoute exact path="/forgot" Component={Forgot} />
-                                        <PublicRoute exact path="/reset/:code?" Component={Reset} />
-                                    </Switch>
-                                    <MessageSystem />
-                                    <Footer />
-                                </Router>
-                            </FilterProvider>
+                            <Router>
+                                <Loading />
+                                <Header />
+                                <Switch>
+                                    <PrivateRoute exact path="/" Component={Start} />
+                                    <PublicRoute exact path="/login" Component={Login} />
+                                    <PrivateRoute exact path="/logout" Component={Logout} />
+                                    <PublicRoute exact path="/forgot" Component={Forgot} />
+                                    <PublicRoute exact path="/reset/:code?" Component={Reset} />
+                                </Switch>
+                                <MessageSystem />
+                                <Footer />
+                            </Router>
                         </MessageProvider>
                     </LoadingProvider>
                 </ApolloProvider>

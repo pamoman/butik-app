@@ -4,8 +4,8 @@
 
 const utils = {
     currency: (amount) => {
-        // let converted = Number.isInteger(amount) ? amount : amount.toFixed(2);
-        let converted = Math.ceil(amount);
+        let converted = Number.isInteger(amount) ? amount : amount.toFixed(2);
+        // let converted = Math.ceil(amount);
 
         return converted + ":-";
     },

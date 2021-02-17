@@ -12,6 +12,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import SwapVerticalCircleIcon from '@material-ui/icons/SwapVerticalCircle';
 import HomeWorkIcon from '@material-ui/icons/HomeWork';
@@ -37,6 +39,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import LinkIcon from '@material-ui/icons/Link';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 // Icon helper
 const icon = {
@@ -79,6 +82,9 @@ const icon = {
     "AuthLink": <SupervisorAccountIcon fontSize="large" key="AuthLink" />,
     "AdminLink": <SettingsIcon fontSize="large" key="AdminLink" />,
     "Generate": <LibraryAddIcon fontSize="large" key="Generate" />,
+    "Plus": <AddCircleIcon fontSize="large" key="Plus" />,
+    "Minus": <RemoveCircleIcon fontSize="large" key="Remove" />,
+    "Cart": <ShoppingCartIcon fontSize="large" key="Remove" />,
 }
 
 const getIcon = (name) => icon[name];

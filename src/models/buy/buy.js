@@ -2,15 +2,19 @@
  * Graphql - Buy
  */
 
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 export const BUY = gql`
     query getProduct ($barcode: String!) {
-        products(where: { barcodes: { value: $barcode } }) {
-            name
-            barcodes {
-                value
+        barcodes(where: { value: $barcode }) {
+            value
+            qty
+            product {
+                id
+                name
+                price
+                stock
             }
-        } 
+        }
     }
 `;
