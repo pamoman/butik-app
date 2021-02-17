@@ -18,3 +18,11 @@ export const BUY = gql`
         }
     }
 `;
+
+export const DEPARTMENTS = gql`
+    query getDepartments {
+        departments {
+            name
+        }
+    }
+`;

@@ -11,7 +11,6 @@ import { LoadingProvider, Loading } from "components/loading/Loading";
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 import theme from './theme/Default';
-import { ItemsProvider } from "components/items/Items";
 import { MessageProvider } from "components/messageSystem/Message";
 import MessageSystem from "components/messageSystem/MessageSystem";
 

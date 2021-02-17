@@ -4,7 +4,7 @@
 
 import { useHistory } from 'react-router-dom';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import { useAuthToken, useUserRole } from "config/auth";
+import { useAuthToken, useUserRole, useUser, useBasket } from "config/auth";
 
 const LOGIN = gql`
     mutation login($login: String!, $password: String!) {
@@ -26,19 +26,9 @@ export const USER = gql`
     }
 `;
 
-export const ROLE = gql`
-    query user {
-        me {
-            role {
-                name
-            }
-        }
-    }
-`;
-
 export const useLoginMutation = () => {
     const [, setAuthToken, removeAuthtoken] = useAuthToken();
-    const [getUserRole] = useUserRoleQuery();
+    const [getUser] = useUserQuery();
 
     const [mutation] = useMutation(LOGIN, {
         onCompleted: (data) => {
@@ -47,7 +37,7 @@ export const useLoginMutation = () => {
             removeAuthtoken();
             setAuthToken(newToken);
             // Add authToken manually, not fully processed in cookie yet
-            getUserRole();
+            getUser();
         },
     });
 
@@ -63,12 +53,14 @@ export const useLoginMutation = () => {
     return [login];
 };
 
-const useUserRoleQuery = () => {
+const useUserQuery = () => {
     const [, setUserRole, removeUserRole] = useUserRole();
+    const [, setUser, removeUser] = useUser();
+    const [, setBasket, removeBasket] = useBasket();
     const [token, , ] = useAuthToken();
     const history = useHistory();
 
-    const [getUserRole] = useLazyQuery(ROLE, {
+    const [getUser] = useLazyQuery(USER, {
         // Adding the authToken manually, cookie not ready in login function
         context: {
             headers: {
@@ -77,9 +69,16 @@ const useUserRoleQuery = () => {
         },
         onCompleted: (data) => {
             const role = data.me.role.name;
+            const user = data.me;
 
             removeUserRole();
             setUserRole(role);
+
+            removeUser();
+            setUser(user);
+
+            removeBasket();
+            setBasket([]);
 
             history.push("/");
             window.location.reload();
@@ -89,5 +88,5 @@ const useUserRoleQuery = () => {
         }
     });
 
-    return [getUserRole];
+    return [getUser];
 }

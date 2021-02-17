@@ -12,16 +12,16 @@ import {
     TableHead, TableRow
 } from '@material-ui/core';
 import useStyles from './Styles';
-import { useItems } from "components/items/Items";
+import { useBasket } from "config/auth";
 
 const Summary = () => {
     const classes = useStyles(),
-          [items] = useItems(),
+          [basket] = useBasket(),
           currency = utils.currency,
           quantity = utils.quantity;
     
     const calculateTotal = () => {
-        return items.reduce((total, row) => total + (row.item.product.price * row.qty), 0);
+        return basket.reduce((total, row) => total + (row.item.product.price * row.qty), 0);
     };
 
     return (
@@ -37,7 +37,7 @@ const Summary = () => {
 
             <CardContent className={classes.CardContent}>
                 <Typography variant="h5">
-                    {`Antal produkter: ${quantity(items.length)}`}
+                    {`Antal produkter: ${quantity(basket.length)}`}
                 </Typography>
 
                 <Typography variant="h5">
