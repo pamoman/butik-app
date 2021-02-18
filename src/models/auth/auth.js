@@ -22,6 +22,11 @@ export const USER = gql`
             role {
                 name
             }
+            user {
+                department {
+                    name
+                }
+            }
         }
     }
 `;
