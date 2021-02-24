@@ -4,7 +4,7 @@
 
 import { useHistory } from 'react-router-dom';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import { useAuthToken, useUserRole, useUser, useBasket } from "config/auth";
+import { useAuthToken, useUserRole, useUser, useItems } from "config/auth";
 
 const LOGIN = gql`
     mutation login($login: String!, $password: String!) {
@@ -61,7 +61,7 @@ export const useLoginMutation = () => {
 const useUserQuery = () => {
     const [, setUserRole, removeUserRole] = useUserRole();
     const [, setUser, removeUser] = useUser();
-    const [, setBasket, removeBasket] = useBasket();
+    const [, setItems, removeItems] = useItems();
     const [token, , ] = useAuthToken();
     const history = useHistory();
 
@@ -82,8 +82,8 @@ const useUserQuery = () => {
             removeUser();
             setUser(user);
 
-            removeBasket();
-            setBasket([]);
+            removeItems();
+            setItems([]);
 
             history.push("/");
             window.location.reload();

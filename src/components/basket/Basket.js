@@ -12,32 +12,30 @@ import {
     TableHead, TableRow
 } from '@material-ui/core';
 import useStyles from './Styles';
-import { useBasket } from "config/auth";
 
-const Basket = () => {
-    const [basket, setBasket] = useBasket(),
-          currency = utils.currency,
+const Basket = ({ items, setItems }) => {
+    const currency = utils.currency,
           quantity = utils.quantity;
 
     const increase = (barcode) => {
-        let itemToChange = basket.find(row => row.item.value === barcode);
+        let itemToChange = items.find(row => row.item.value === barcode);
 
         itemToChange.qty += itemToChange.item.qty;
-        setBasket(basket);
+        setItems(items);
     }
 
     const decrease = (barcode) => {
-        let itemToChange = basket.find(row => row.item.value === barcode);
+        let itemToChange = items.find(row => row.item.value === barcode);
 
         itemToChange.qty -= itemToChange.item.qty;
-        setBasket(basket);
+        setItems(items);
     }
 
     const setQty = (barcode, qty) => {
-        let itemToChange = basket.find(row => row.item.value === barcode);
+        let itemToChange = items.find(row => row.item.value === barcode);
 
         itemToChange.qty = qty;
-        setBasket(basket);
+        setItems(items);
     }
 
     return (
@@ -53,7 +51,7 @@ const Basket = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {basket.map((row, i) => {
+                    {items.map((row, i) => {
                         return (
                             <TableRow key={`item-${i}`}>
                                 <TableCell>{row.item.product.name}</TableCell>

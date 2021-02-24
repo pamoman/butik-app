@@ -5,6 +5,7 @@
 import React, { useState, Fragment } from 'react';
 import getIcon from 'models/icon/Icon';
 import utils from 'models/utils/utils';
+import { useMessage } from 'components/messageSystem/Message';
 import clsx from 'clsx';
 import {
     Grid, Box, Typography, TextField, ButtonGroup, Button, Card, CardHeader, Tooltip, CardContent, CardActions,
@@ -12,17 +13,27 @@ import {
     TableHead, TableRow
 } from '@material-ui/core';
 import useStyles from './Styles';
-import { useBasket } from "config/auth";
 
-const Summary = () => {
+const Summary = ({ items }) => {
     const classes = useStyles(),
-          [basket] = useBasket(),
+          messageContext = useMessage(),
+          setMessage = messageContext.setMessage,
           currency = utils.currency,
           quantity = utils.quantity;
     
     const calculateTotal = () => {
-        return basket.reduce((total, row) => total + (row.item.product.price * row.qty), 0);
+        return items.reduce((total, row) => total + (row.item.product.price * row.qty), 0);
     };
+
+    const checkout = () => {
+        if (!items.length) {
+            setMessage({ 
+                open: true, 
+                text: "Tom korg!", 
+                severity: "error" 
+            });
+        }
+    }
 
     return (
         <Card className={classes.card}>
@@ -37,7 +48,7 @@ const Summary = () => {
 
             <CardContent className={classes.CardContent}>
                 <Typography variant="h5">
-                    {`Antal produkter: ${quantity(basket.length)}`}
+                    {`Antal produkter: ${quantity(items.length)}`}
                 </Typography>
 
                 <Typography variant="h5">
@@ -59,6 +70,7 @@ const Summary = () => {
                         color="primary"
                         variant="contained"
                         startIcon={getIcon("Save")}
+                        onClick={checkout}
                     >
                         Köp
                     </Button>

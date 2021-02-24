@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useLoadingEffect } from "components/loading/Loading";
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { BUY, DEPARTMENTS } from 'models/buy/buy.js';
-import { useUser, useBasket } from "config/auth";
+import { useUser, useItems } from "config/auth";
 import Basket from 'components/basket/Basket';
 import Summary from 'components/summary/Summary';
 import { Grid, Tooltip, Typography, Button, ButtonGroup, TextField } from '@material-ui/core';
@@ -17,8 +17,8 @@ const Start = () => {
     const title = "Köp",
           [barcode, setBarcode] = useState(""),
           [user] = useUser(),
-          [basket, setBasket] = useBasket(),
-          [department, setDepartment] = useState("Vaktmästeriet"),
+          [items, setItems] = useItems(),
+          [department, setDepartment] = useState(user.user?.department?.name || ""),
           classes = useStyles();
 
     const [loadProduct, { loading: productLoading }] = useLazyQuery(BUY, {
@@ -26,32 +26,26 @@ const Start = () => {
         onError: error => console.log(`Error! ${error.message}`),
         onCompleted: data => {
             if (data.barcodes && data.barcodes.length > 0) {
-                let newItem = data.barcodes[0];
-                let qty = newItem.qty;
-                let found = basket.find(row => row.item.product.id === newItem.product.id);
+                let newItem = data.barcodes[0],
+                    qty = newItem.qty,
+                    found = items.find(row => row.item.product.id === newItem.product.id);
 
                 if (found) {
                     found.qty += found.item.qty;
                 } else {
-                    basket.push({
+                    items.push({
                         item: newItem, qty
                     });
                 }
 
-                setBasket(basket);
+                setItems(items);
                 setBarcode("");
             }
         }
     });
-    
-    const Add = (e) => {
-        e.preventDefault();
-
-        loadProduct({ variables: { barcode }});
-    }
 
     /*---- Data query start ----*/
-    const { loading: departmentLoading, error, data } = useQuery(DEPARTMENTS, { variables: { id: user.id } });
+    const { loading: departmentLoading, error, data } = useQuery(DEPARTMENTS);
 
     useLoadingEffect(productLoading || departmentLoading);
 
@@ -81,16 +75,16 @@ const Start = () => {
                         >
                             <option key={`bill-01`} value={"start"} disabled>Välj här</option>
 
-                            {data && data.departments.map((dpmt, i) => (
-                                <option key={`department-${i}`} value={dpmt.name}>
-                                    {dpmt.name}
+                            {data && data.departments.map((d, i) => (
+                                <option key={`department-${i}`} value={d.name}>
+                                    {d.name}
                                 </option>
                             ))}
                         </TextField>
                     </Grid>
 
                     <Grid item xs={12}>
-                        <form className={classes.invoiceForm} onSubmit={Add}>
+                        <form className={classes.invoiceForm}>
                             <ButtonGroup className={classes.invoiceFormGroup} aria-label="Lägg till en vara">
                                 <TextField
                                     className={classes.invoiceInput}
@@ -110,6 +104,7 @@ const Start = () => {
                                     type="submit"
                                     variant="contained"
                                     startIcon={getIcon("Add")}
+                                    onClick={() => loadProduct({ variables: { barcode }})}
                                 >
                                     Lägg till
                                 </Button>
@@ -119,7 +114,7 @@ const Start = () => {
                                     color="primary"
                                     variant="contained"
                                     startIcon={getIcon("Delete")}
-                                    onClick={() => setBasket([])}
+                                    onClick={() => setItems([])}
                                 >
                                     Rensa
                                 </Button>
@@ -129,10 +124,10 @@ const Start = () => {
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Summary />
+                    <Summary items={items} />
                 </Grid>
 
-                <Grid item xs={12}><Basket /></Grid>
+                <Grid item xs={12}><Basket items={items} setItems={setItems} /></Grid>
             </Grid>
         </Grid>
     );

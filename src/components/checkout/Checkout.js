@@ -12,4 +12,4 @@ import {
     TableHead, TableRow
 } from '@material-ui/core';
 import useStyles from './Styles';
-import { useItems } from "components/items/Items";
+import { useItems } from "components/basket/Basket";

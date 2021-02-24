@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 const TOKEN_NAME = "authToken";
 const USER_ROLE = "userRole";
 const USER = "user";
-const BASKET = "basket";
+const ITEMS = "items";
 
 // custom hook to handle authToken - we use compositon to decouple the auth system and it's storage
 export const useAuthToken = () => {
@@ -42,21 +42,21 @@ export const useUser = () => {
     return [cookies[USER], setUser, removeUser];
 };
 
-export const useBasket = () => {
-    const [cookies, setCookie, removeCookie] = useCookies([BASKET]);
+export const useItems = () => {
+    const [cookies, setCookie, removeCookie] = useCookies([ITEMS]);
 
-    const setBasket = (basket) => setCookie(BASKET, basket, { maxAge: 3600, sameSite: "lax", path: '/' });
+    const setItems = (items) => setCookie(ITEMS, items, { maxAge: 3600, sameSite: "lax", path: '/' });
 
-    const removeBasket = () => removeCookie(BASKET, { sameSite: "lax" });
+    const removeItems = () => removeCookie(ITEMS, { sameSite: "lax" });
 
-    return [cookies[BASKET], setBasket, removeBasket];
+    return [cookies[ITEMS], setItems, removeItems];
 };
 
 export const useLogout = () => {
     const [, , removeAuthToken] = useAuthToken();
     const [, , removeUserRole] = useUserRole();
     const [, , removeUser] = useUser();
-    const [, , removeBasket] = useBasket();
+    const [, , removeItems] = useItems();
     const apolloClient = useApolloClient();
     const history = useHistory();
 
@@ -66,7 +66,7 @@ export const useLogout = () => {
         removeAuthToken();
         removeUserRole();
         removeUser();
-        removeBasket();
+        removeItems();
 
         history.push("/login");
         window.location.reload();
