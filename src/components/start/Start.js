@@ -8,7 +8,7 @@ import { useQuery, useLazyQuery } from '@apollo/client';
 import { BUY, DEPARTMENTS } from 'models/buy/buy.js';
 import { useUser, useItems } from "config/auth";
 import Basket from 'components/basket/Basket';
-import Summary from 'components/summary/Summary';
+import Checkout from 'components/checkout/Checkout';
 import { Grid, Tooltip, Typography, Button, ButtonGroup, TextField } from '@material-ui/core';
 import getIcon from 'models/icon/Icon';
 import useStyles from './Styles';
@@ -124,7 +124,7 @@ const Start = () => {
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Summary items={items} />
+                    <Checkout items={items} />
                 </Grid>
 
                 <Grid item xs={12}><Basket items={items} setItems={setItems} /></Grid>
