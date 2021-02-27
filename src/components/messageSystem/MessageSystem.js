@@ -29,7 +29,7 @@ const MessageSystem = () => {
         <Snackbar
             className={classes.messageContainer}
             open={open}
-            autoHideDuration={5000}
+            autoHideDuration={3000}
             onClose={errorClose}
         >
             <Alert className={classes.message} onClose={errorClose} severity={severity}>

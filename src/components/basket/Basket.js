@@ -27,15 +27,26 @@ const Basket = ({ items, setItems }) => {
     const decrease = (barcode) => {
         let itemToChange = items.find(row => row.item.value === barcode);
 
-        itemToChange.qty -= itemToChange.item.qty;
-        setItems(items);
+        if (itemToChange.qty - itemToChange.item.qty > 0) {
+            itemToChange.qty -= itemToChange.item.qty;
+            setItems(items);
+        } else if (itemToChange.qty - itemToChange.item.qty === 0) {
+            items = items.filter(row => row.item.value !== barcode);
+            setItems(items);
+        }
     }
 
     const setQty = (barcode, qty) => {
-        let itemToChange = items.find(row => row.item.value === barcode);
+        if (Number.isInteger(qty) && qty > 0) {
+            console.log("number");
+            let itemToChange = items.find(row => row.item.value === barcode);
 
-        itemToChange.qty = qty;
-        setItems(items);
+            itemToChange.qty = qty;
+            setItems(items);
+        } else if (Number.isInteger(qty) && qty === 0) {
+            items = items.filter(row => row.item.value !== barcode);
+            setItems(items);
+        }
     }
 
     return items.length > 0 && (
@@ -72,11 +83,11 @@ const Basket = ({ items, setItems }) => {
                                             id="amount"
                                             name="amount"
                                             label="Antal"
-                                            type="number"
+                                            type="text"
                                             value={row.qty}
-                                            onChange={(e) => setQty(row.item.value, parseInt(e.target.value))}
                                             required
                                             variant="filled"
+                                            onChange={(e) => setQty(row.item.value, parseInt(e.target.value))}
                                         />
 
                                         <IconButton

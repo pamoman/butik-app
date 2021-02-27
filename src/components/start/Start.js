@@ -26,7 +26,8 @@ const Start = () => {
           classes = useStyles();
 
     const loadProduct = () => {
-        const data = client.query({
+        /* Using client directly because useLazyQuery not working correctly - Bug */
+        client.query({
             query: BUY,
             variables: { barcode },
             fetchPolicy: "network-only",
@@ -35,24 +36,36 @@ const Start = () => {
             const data = res.data;
 
             if (data.barcodes && data.barcodes.length > 0) {
-                let newItem = data.barcodes[0],
-                    qty = newItem.qty,
-                    found = items.find(row => row.item.product.id === newItem.product.id);
-    
-                if (found) {
-                    found.qty += found.item.qty;
-                } else {
-                    items.push({
-                        item: newItem, qty
-                    });
-                }
+                let newItem = data.barcodes[0];
+                
+                items.push({
+                    item: newItem, qty: newItem.qty
+                });
     
                 setItems(items);
-                setBarcode("");
                 setMessage({ open: true, text: `Produkt inlagt: ${newItem.product.name}`, severity: "success" });
+            } else {
+                setMessage({ open: true, text: `Produkt finns inte!`, severity: "error" });
             }
         })
+        .catch(error => console.log(`Error! ${error.message}`));
     };
+
+    const loadProductHandler = (e) => {
+        if (e.key === "Enter") {
+            const found = items.find(row => row.item.value === barcode);
+           
+            if (found) {
+                found.qty += found.item.qty;
+
+                setMessage({ open: true, text: `${found.item.product.name} har ökat med ${found.item.qty}`, severity: "success" });
+            } else {
+                loadProduct();
+            }
+
+            setBarcode("");
+        }
+    }
 
     /*---- Data query start ----*/
     const { loading, error, data } = useQuery(DEPARTMENTS);
@@ -102,8 +115,8 @@ const Start = () => {
                                 label="Streckkod"
                                 type="text"
                                 value={barcode}
-                                onKeyPress={e => e.key === "Enter" && loadProduct()}
                                 onChange={e => setBarcode(e.target.value)}
+                                onKeyPress={loadProductHandler}
                                 variant="filled"
                                 autoFocus={true}
                             />
@@ -121,7 +134,7 @@ const Start = () => {
                                     color="primary"
                                     variant="contained"
                                     startIcon={getIcon("Delete")}
-                                    onClick={() => setItems([])}
+                                    onClick={() => { setBarcode(""); setItems([])}}
                                 >
                                     Rensa
                                 </Button>
