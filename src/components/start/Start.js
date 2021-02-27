@@ -4,9 +4,10 @@
 
 import React, { useState } from 'react';
 import { useLoadingEffect } from "components/loading/Loading";
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { useQuery, useApolloClient } from '@apollo/client';
 import { BUY, DEPARTMENTS } from 'models/buy/buy.js';
 import { useUser, useItems } from "config/auth";
+import { useMessage } from 'components/messageSystem/Message';
 import Basket from 'components/basket/Basket';
 import Checkout from 'components/checkout/Checkout';
 import { Grid, Tooltip, Typography, Button, ButtonGroup, TextField } from '@material-ui/core';
@@ -19,17 +20,25 @@ const Start = () => {
           [user] = useUser(),
           [items, setItems] = useItems(),
           [department, setDepartment] = useState(user.user?.department?.name || ""),
+          messageContext = useMessage(),
+          setMessage = messageContext.setMessage,
+          client = useApolloClient(),
           classes = useStyles();
 
-    const [loadProduct, { loading: productLoading }] = useLazyQuery(BUY, {
-        fetchPolicy: "network-only",
-        onError: error => console.log(`Error! ${error.message}`),
-        onCompleted: data => {
+    const loadProduct = () => {
+        const data = client.query({
+            query: BUY,
+            variables: { barcode },
+            fetchPolicy: "network-only",
+        })
+        .then(res => {
+            const data = res.data;
+
             if (data.barcodes && data.barcodes.length > 0) {
                 let newItem = data.barcodes[0],
                     qty = newItem.qty,
                     found = items.find(row => row.item.product.id === newItem.product.id);
-
+    
                 if (found) {
                     found.qty += found.item.qty;
                 } else {
@@ -37,17 +46,18 @@ const Start = () => {
                         item: newItem, qty
                     });
                 }
-
+    
                 setItems(items);
                 setBarcode("");
+                setMessage({ open: true, text: `Produkt inlagt: ${newItem.product.name}`, severity: "success" });
             }
-        }
-    });
+        })
+    };
 
     /*---- Data query start ----*/
-    const { loading: departmentLoading, error, data } = useQuery(DEPARTMENTS);
+    const { loading, error, data } = useQuery(DEPARTMENTS);
 
-    useLoadingEffect(productLoading || departmentLoading);
+    useLoadingEffect(loading);
 
     error && console.log(`Error! ${error.message}`);
     /*---- Data query end ----*/
@@ -84,31 +94,28 @@ const Start = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <form className={classes.invoiceForm}>
-                            <ButtonGroup className={classes.invoiceFormGroup} aria-label="Lägg till en vara">
-                                <TextField
-                                    className={classes.invoiceInput}
-                                    id="barcode"
-                                    name="barcode"
-                                    label="Streckkod"
-                                    type="text"
-                                    value={barcode}
-                                    onChange={e => setBarcode(e.target.value)}
-                                    required
-                                    variant="filled"
-                                />
+                        <ButtonGroup className={classes.invoiceFormGroup} aria-label="Lägg till en vara">
+                            <TextField
+                                className={classes.invoiceInput}
+                                id="barcode"
+                                name="barcode"
+                                label="Streckkod"
+                                type="text"
+                                value={barcode}
+                                onKeyPress={e => e.key === "Enter" && loadProduct()}
+                                onChange={e => setBarcode(e.target.value)}
+                                variant="filled"
+                                autoFocus={true}
+                            />
 
-                                <Button
-                                    className={classes.invoiceButton}
-                                    color="primary"
-                                    type="submit"
-                                    variant="contained"
-                                    startIcon={getIcon("Add")}
-                                    onClick={() => loadProduct({ variables: { barcode }})}
-                                >
-                                    Lägg till
-                                </Button>
-
+                            <Tooltip
+                                title=
+                                {
+                                    <Typography variant="body1">
+                                        Ta bort alla produkter
+                                    </Typography>
+                                }
+                            >
                                 <Button
                                     className={classes.invoiceButton}
                                     color="primary"
@@ -118,8 +125,8 @@ const Start = () => {
                                 >
                                     Rensa
                                 </Button>
-                            </ButtonGroup>
-                        </form>
+                            </Tooltip>
+                        </ButtonGroup>
                     </Grid>
                 </Grid>
 

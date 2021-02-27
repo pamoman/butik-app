@@ -5,7 +5,6 @@
 import React, { useState, Fragment } from 'react';
 import getIcon from 'models/icon/Icon';
 import utils from 'models/utils/utils';
-import { useMessage } from 'components/messageSystem/Message';
 import { useCreateSale } from 'models/buy/buy.js';
 import clsx from 'clsx';
 import {
@@ -17,9 +16,7 @@ import useStyles from './Styles';
 
 const Checkout = ({ items }) => {
     const classes = useStyles(),
-          messageContext = useMessage(),
           createSale = useCreateSale(),
-          setMessage = messageContext.setMessage,
           currency = utils.currency,
           quantity = utils.quantity;
     
@@ -28,14 +25,6 @@ const Checkout = ({ items }) => {
     };
 
     const checkoutNow = () => {
-        if (!items.length) {
-            return setMessage({ 
-                open: true, 
-                text: "Tom korg!", 
-                severity: "error" 
-            });
-        }
-
         createSale({
             data: {
                 firstname: "Ted",
@@ -83,15 +72,18 @@ const Checkout = ({ items }) => {
                         </Typography>
                     }
                 >
-                    <Button
-                        className={classes.invoiceButton}
-                        color="primary"
-                        variant="contained"
-                        startIcon={getIcon("Save")}
-                        onClick={checkoutNow}
-                    >
-                        Köp
-                    </Button>
+                    <div>
+                        <Button
+                            className={classes.invoiceButton}
+                            color="primary"
+                            variant="contained"
+                            startIcon={getIcon("Save")}
+                            onClick={checkoutNow}
+                            disabled={!items.length}
+                        >
+                            Köp
+                        </Button>
+                    </div>
                 </Tooltip>
             </CardActions>
         </Card>

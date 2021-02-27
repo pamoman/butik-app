@@ -38,7 +38,7 @@ const Basket = ({ items, setItems }) => {
         setItems(items);
     }
 
-    return (
+    return items.length > 0 && (
         <TableContainer className="table-container">
             <Table className="table" aria-label="Person invoice table">
                 <TableHead>
