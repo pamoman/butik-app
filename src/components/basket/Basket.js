@@ -49,7 +49,7 @@ const Basket = ({ items, setItems }) => {
         }
     }
 
-    return items.length > 0 && (
+    return items && items.length > 0 && (
         <TableContainer className="table-container">
             <Table className="table" aria-label="Person invoice table">
                 <TableHead>

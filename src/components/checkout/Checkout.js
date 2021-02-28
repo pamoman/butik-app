@@ -2,19 +2,14 @@
  * Summary
  */
 
-import React, { useState, Fragment } from 'react';
+import React from 'react';
 import getIcon from 'models/icon/Icon';
 import utils from 'models/utils/utils';
 import { useCreateSale } from 'models/buy/buy.js';
-import clsx from 'clsx';
-import {
-    Grid, Box, Typography, TextField, ButtonGroup, Button, Card, CardHeader, Tooltip, CardContent, CardActions,
-    Avatar, IconButton, Collapse, Table, TableBody, TableCell, TableContainer,
-    TableHead, TableRow
-} from '@material-ui/core';
+import { Typography, Button, Card, CardHeader, Tooltip, CardContent, CardActions } from '@material-ui/core';
 import useStyles from './Styles';
 
-const Checkout = ({ items }) => {
+const Checkout = ({ items, user }) => {
     const classes = useStyles(),
           createSale = useCreateSale(),
           currency = utils.currency,
@@ -27,17 +22,18 @@ const Checkout = ({ items }) => {
     const checkoutNow = () => {
         createSale({
             data: {
-                firstname: "Ted",
-                lastname: "Merry",
-                department: "VKTM",
-                total: 20,
-                items: [
-                    {
-                        "name": "Penna",
-                        "quantity": 1,
-                        "price": 20
+                firstname: user.info.firstname,
+                lastname: user.info.lastname,
+                department: user.info.department.name,
+                total: calculateTotal(),
+                items: items.map(row => {
+                    return {
+                        name: row.item.product.name,
+                        quantity: row.qty,
+                        price: row.item.product.price,
+                        subtotal: row.item.product.price * row.qty
                     }
-                ]
+                })
             }
         })
     };

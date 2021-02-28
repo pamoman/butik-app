@@ -3,6 +3,8 @@
  */
 
 import { gql, useMutation } from '@apollo/client';
+import { useItems } from "config/auth";
+import { useMessage } from 'components/messageSystem/Message';
 
 export const BUY = gql`
     query getProduct ($barcode: String!) {
@@ -46,7 +48,20 @@ export const CHECKOUT = gql`
 `;
 
 export const useCreateSale = () => {
-    const [createSaleMutation] = useMutation(CHECKOUT);
+    const [, setItems, removeItems] = useItems(),
+          messageContext = useMessage(),
+          setMessage = messageContext.setMessage;
+
+    const [createSaleMutation] = useMutation(CHECKOUT, {
+        onError: (err) => {
+            setMessage({ open: true, text: `Ursäkta, något gick fel!`, severity: "error" });
+            console.log(err);
+        },
+        onCompleted: () => {
+            setItems([]);
+            setMessage({ open: true, text: `Klart!  Handla igen eller logga ut.`, severity: "success" });
+        }
+    });
 
     const createSale = (input) => {
         return createSaleMutation({ variables: { input } });

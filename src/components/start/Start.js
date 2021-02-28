@@ -19,7 +19,7 @@ const Start = () => {
           [barcode, setBarcode] = useState(""),
           [user] = useUser(),
           [items, setItems] = useItems(),
-          [department, setDepartment] = useState(user.user?.department?.name || ""),
+          [department, setDepartment] = useState(user.info?.department?.name || ""),
           messageContext = useMessage(),
           setMessage = messageContext.setMessage,
           client = useApolloClient(),
@@ -144,7 +144,7 @@ const Start = () => {
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Checkout items={items} />
+                    <Checkout items={items} user={user} />
                 </Grid>
 
                 <Grid item xs={12}><Basket items={items} setItems={setItems} /></Grid>
