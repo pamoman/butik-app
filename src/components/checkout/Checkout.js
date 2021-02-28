@@ -9,7 +9,7 @@ import { useCreateSale } from 'models/buy/buy.js';
 import { Typography, Button, Card, CardHeader, Tooltip, CardContent, CardActions } from '@material-ui/core';
 import useStyles from './Styles';
 
-const Checkout = ({ items, user }) => {
+const Checkout = ({ items, user, department }) => {
     const classes = useStyles(),
           createSale = useCreateSale(),
           currency = utils.currency,
@@ -22,9 +22,9 @@ const Checkout = ({ items, user }) => {
     const checkoutNow = () => {
         createSale({
             data: {
+                department,
                 firstname: user.info.firstname,
                 lastname: user.info.lastname,
-                department: user.info.department.name,
                 total: calculateTotal(),
                 items: items.map(row => {
                     return {

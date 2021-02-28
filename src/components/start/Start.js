@@ -144,7 +144,7 @@ const Start = () => {
                 </Grid>
 
                 <Grid item xs={6}>
-                    <Checkout items={items} user={user} />
+                    <Checkout items={items} user={user} department={department} />
                 </Grid>
 
                 <Grid item xs={12}><Basket items={items} setItems={setItems} /></Grid>
