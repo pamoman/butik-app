@@ -4,6 +4,7 @@
 
 import { useHistory } from 'react-router-dom';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
+import { useMessage } from 'components/messageSystem/Message';
 import { useAuthToken, useUserRole, useUser, useItems } from "config/auth";
 
 const LOGIN = gql`
@@ -28,6 +29,18 @@ export const USER = gql`
                 department {
                     name
                 }
+            }
+        }
+    }
+`;
+
+const REGISTER = gql`
+    mutation registerUser($input: createUserInput!) {
+        createUser(input: $input) {
+            user {
+                username
+                firstname
+                lastname
             }
         }
     }
@@ -61,11 +74,11 @@ export const useLoginMutation = () => {
 };
 
 const useUserQuery = () => {
-    const [, setUserRole, removeUserRole] = useUserRole();
-    const [, setUser, removeUser] = useUser();
-    const [, setItems, removeItems] = useItems();
-    const [token, , ] = useAuthToken();
-    const history = useHistory();
+    const [, setUserRole, removeUserRole] = useUserRole(),
+          [, setUser, removeUser] = useUser(),
+          [, setItems, removeItems] = useItems(),
+          [token, , ] = useAuthToken(),
+          history = useHistory();
 
     const [getUser] = useLazyQuery(USER, {
         // Adding the authToken manually, cookie not ready in login function
@@ -97,3 +110,26 @@ const useUserQuery = () => {
 
     return [getUser];
 }
+
+export const useRegisterUser = () => {
+    const messageContext = useMessage(),
+          setMessage = messageContext.setMessage,
+          history = useHistory();
+
+    const [RegisterUserMutation] = useMutation(REGISTER, {
+        onError: (err) => {
+            console.log(err);
+            setMessage({ open: true, text: `Epostadressen eller taggen är redan registrerade!  Testa att logga in istället.`, severity: "error" });
+        },
+        onCompleted: (data) => {
+            history.push("/login");
+            setMessage({ open: true, text: `Nu kan du logga in!`, severity: "success" });
+        }
+    });
+
+    const registerUser = (data) => {
+        return RegisterUserMutation({ variables: { input: { data } } });
+    };
+
+    return [registerUser];
+};

@@ -24,6 +24,7 @@ export const BUY = gql`
 export const DEPARTMENTS = gql`
     query getDepartments {
         departments {
+            id
             name
         }
     }
@@ -54,8 +55,8 @@ export const useCreateSale = () => {
 
     const [createSaleMutation] = useMutation(CHECKOUT, {
         onError: (err) => {
-            setMessage({ open: true, text: `Ursäkta, något gick fel!`, severity: "error" });
             console.log(err);
+            setMessage({ open: true, text: `Ursäkta, något gick fel!`, severity: "error" });
         },
         onCompleted: () => {
             setItems([]);

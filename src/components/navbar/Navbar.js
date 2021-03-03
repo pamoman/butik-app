@@ -26,8 +26,9 @@ const Navbar = () => {
     return (
         <nav className={classes.nav}>
             <PrivateNav to="/" activeClassName="selected-nav" isActive={ checkActiveRoot } name="Start" />
-            {!isAuth && <PublicNav to="/login" className="auth" activeClassName="selected-nav" name="Logga in" />}
             <PrivateNav to="/logout" className="auth" activeClassName="selected-nav" name="Logga ut" />
+            {!isAuth && <PublicNav to="/login" className="auth" activeClassName="selected-nav" name="Logga in" />}
+            {!isAuth && <PublicNav to="/register" activeClassName="selected-nav" name="Registrera" />}
         </nav>
     );
 };

@@ -22,7 +22,7 @@ const Basket = ({ items, setItems }) => {
 
         itemToChange.qty += itemToChange.item.qty;
         setItems(items);
-    }
+    };
 
     const decrease = (barcode) => {
         let itemToChange = items.find(row => row.item.value === barcode);
@@ -34,7 +34,7 @@ const Basket = ({ items, setItems }) => {
             items = items.filter(row => row.item.value !== barcode);
             setItems(items);
         }
-    }
+    };
 
     const setQty = (barcode, qty) => {
         if (Number.isInteger(qty) && qty > 0) {
@@ -47,24 +47,41 @@ const Basket = ({ items, setItems }) => {
             items = items.filter(row => row.item.value !== barcode);
             setItems(items);
         }
-    }
+    };
+
+    const remove = (barcode) => {
+        let itemToChange = items.find(row => row.item.value === barcode);
+
+        items = items.filter(row => row.item.value !== barcode);
+        setItems(items);
+    };
 
     return items && items.length > 0 && (
         <TableContainer className="table-container">
             <Table className="table" aria-label="Person invoice table">
                 <TableHead>
                     <TableRow>
-                        <TableCell width="40%">Produkt</TableCell>
+                        <TableCell width="10%"></TableCell>
+                        <TableCell width="35%">Produkt</TableCell>
                         <TableCell width="10%">Förpackning</TableCell>
                         <TableCell width="10%">Pris/st</TableCell>
                         <TableCell width="10%">Total</TableCell>
-                        <TableCell width="30%">Antal</TableCell>
+                        <TableCell width="25%" align="center">Antal</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {items.map((row, i) => {
                         return (
                             <TableRow key={`item-${i}`}>
+                                <TableCell>
+                                    <IconButton
+                                        color="primary"
+                                        variant="contained"
+                                        onClick={() => remove(row.item.value)}
+                                    >
+                                        {getIcon("Delete")}
+                                    </IconButton>
+                                </TableCell>
                                 <TableCell>{row.item.product.name}</TableCell>
                                 <TableCell>{quantity(row.item.qty)}</TableCell>
                                 <TableCell>{currency(row.item.product.price)}</TableCell>

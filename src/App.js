@@ -22,6 +22,7 @@ import Start from 'components/start/Start';
 // Auth components
 import Login from 'components/auth/Login';
 import Logout from 'components/auth/Logout';
+import Register from 'components/auth/Register';
 import Forgot from 'components/auth/Forgot';
 import Reset from 'components/auth/Reset';
 import PublicRoute from 'components/auth/PublicRoute';
@@ -45,6 +46,7 @@ const App = () => {
                                     <PrivateRoute exact path="/" Component={Start} />
                                     <PublicRoute exact path="/login" Component={Login} />
                                     <PrivateRoute exact path="/logout" Component={Logout} />
+                                    <PublicRoute exact path="/register" Component={Register} />
                                     <PublicRoute exact path="/forgot" Component={Forgot} />
                                     <PublicRoute exact path="/reset/:code?" Component={Reset} />
                                 </Switch>

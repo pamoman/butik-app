@@ -114,10 +114,11 @@ const Start = () => {
                                 name="barcode"
                                 label="Streckkod"
                                 type="text"
+                                variant="filled"
                                 value={barcode}
+                                InputProps={{ disableUnderline: true }}
                                 onChange={e => setBarcode(e.target.value)}
                                 onKeyPress={loadProductHandler}
-                                variant="filled"
                                 autoFocus={true}
                             />
 

@@ -11,8 +11,8 @@ import useStyles from './Styles';
 
 const Login = () => {
     const title = "Logga in",
-          [hidden, setHidden] = useState(true),
           [check, setCheck] = useState(false),
+          [password, setPassword] = useState(""),
           [login] = useLoginMutation(),
           history = useHistory(),
           messageContext = useMessage(),
@@ -36,11 +36,6 @@ const Login = () => {
             });
     }
 
-    const toggleShowPassword = () => {
-        setHidden(!hidden);
-        setCheck(!check);
-    }
-
     return (
         <Grid container className="page-container">
             <Grid item xs={12} className={`banner ${classes.pageBanner}`}>
@@ -53,7 +48,7 @@ const Login = () => {
                         <TextField
                             id="person-username"
                             name="username"
-                            label="Tag"
+                            label="Tagg"
                             type="number"
                             size="small"
                             variant="filled"
@@ -65,11 +60,13 @@ const Login = () => {
                             className="password"
                             id="person-password"
                             name="password"
-                            label="Pin"
-                            type={hidden ? "password" : "text"}
+                            label="Pinkod"
+                            type={!check ? "password" : "text"}
                             size="small"
                             variant="filled"
                             required
+                            value={password}
+                            onChange={(e) => /^[0-9]{0,4}$/.test(e.target.value) && setPassword(e.target.value)}
                             InputProps={{ disableUnderline: true }}
                         />
 
@@ -77,7 +74,7 @@ const Login = () => {
                             control={
                                 <Checkbox
                                     checked={check}
-                                    onChange={toggleShowPassword}
+                                    onChange={() => setCheck(!check)}
                                     name="checkedB"
                                     style={{ color: "white" }}
                                 />
