@@ -5,6 +5,7 @@
 import React, { useState, Fragment } from 'react';
 import getIcon from 'models/icon/Icon';
 import utils from 'models/utils/utils';
+import { useUser, useItems } from "config/auth";
 import clsx from 'clsx';
 import {
     Box, Typography, TextField, ButtonGroup, Button, Card, CardHeader, Tooltip, CardContent, CardActions,
@@ -13,9 +14,10 @@ import {
 } from '@material-ui/core';
 import useStyles from './Styles';
 
-const Basket = ({ items, setItems }) => {
+const Basket = () => {
     const currency = utils.currency,
-          quantity = utils.quantity;
+          quantity = utils.quantity,
+          [items, setItems] = useItems();
 
     const increase = (barcode) => {
         let itemToChange = items.find(row => row.item.value === barcode);

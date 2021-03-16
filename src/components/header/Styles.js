@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => {
         },
         headerNav: {
             display: "flex",
-            height: "80px",
+            height: "90px",
             borderBottom: `1px solid ${theme.palette.border.primary.main}`,
             "& nav": {
                 display: "none",

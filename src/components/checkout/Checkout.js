@@ -5,12 +5,16 @@
 import React from 'react';
 import getIcon from 'models/icon/Icon';
 import utils from 'models/utils/utils';
+import { useItems } from "config/auth";
+import { useUser } from "config/auth";
 import { useCreateSale } from 'models/buy/buy.js';
 import { Typography, Button, Card, CardHeader, Tooltip, CardContent, CardActions } from '@material-ui/core';
 import useStyles from './Styles';
 
-const Checkout = ({ items, user, department }) => {
+const Checkout = () => {
     const classes = useStyles(),
+          [items] = useItems(),
+          [user] = useUser(),
           createSale = useCreateSale(),
           currency = utils.currency,
           quantity = utils.quantity;
@@ -20,9 +24,10 @@ const Checkout = ({ items, user, department }) => {
     };
 
     const checkoutNow = () => {
-        createSale({
+        console.log(user.info.department.name);
+        /* createSale({
             data: {
-                department,
+                department: user.info.department.name,
                 firstname: user.info.firstname,
                 lastname: user.info.lastname,
                 total: calculateTotal(),
@@ -35,7 +40,7 @@ const Checkout = ({ items, user, department }) => {
                     }
                 })
             }
-        })
+        }) */
     };
 
     return (

@@ -12,7 +12,7 @@ import logo from 'assets/logo/logo.png';
 import useStyles from './Styles';
 
 const Header = () => {
-    const title = "App",
+    const title = "Butik",
           isAuth = AuthCheck(),
           classes = useStyles();
 

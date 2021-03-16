@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            height: "80px",
+            height: "90px",
             position: "fixed",
             bottom: 0,
             borderTop: `1px solid ${theme.palette.border.primary.main}`,
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => {
                 height: "100%",
                 "& a": {
                     width: "100%",
-                    paddingBottom: "1rem",
+                    paddingBottom: "0.5rem",
                     borderBottom: "none",
                     "&:first-child": {
                         borderLeft: "none"

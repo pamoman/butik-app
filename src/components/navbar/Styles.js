@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => {
                 },
             },
         }),
+        navIcon: {
+            textAlign: "center"
+        },
     }
 });
 

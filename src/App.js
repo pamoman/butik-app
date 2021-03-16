@@ -17,7 +17,7 @@ import MessageSystem from "components/messageSystem/MessageSystem";
 // Page components
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
-import Start from 'components/start/Start';
+import Buy from 'components/buy/Buy';
 import Me from 'components/me/Me';
 
 // Auth components
@@ -44,7 +44,7 @@ const App = () => {
                                 <Loading />
                                 <Header />
                                 <Switch>
-                                    <PrivateRoute exact path="/" Component={Start} />
+                                    <PrivateRoute exact path="/" Component={Buy} />
                                     <PrivateRoute exact path="/me" Component={Me} />
                                     <PublicRoute exact path="/login" Component={Login} />
                                     <PrivateRoute exact path="/logout" Component={Logout} />

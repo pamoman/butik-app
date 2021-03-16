@@ -41,6 +41,9 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonIcon from '@material-ui/icons/Person';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 // Icon helper
 const icon = {
@@ -86,7 +89,11 @@ const icon = {
     "Plus": <AddCircleIcon fontSize="large" key="Plus" />,
     "Minus": <RemoveCircleIcon fontSize="large" key="Remove" />,
     "Cart": <ShoppingCartIcon fontSize="large" key="Remove" />,
-    "me": <PersonIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Me" />,
+    "Me": <PersonIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Me" />,
+    "Shop": <ShoppingCartIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Shop" />,
+    "Login": <VpnKeyIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Login" />,
+    "Logout": <ExitToAppIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Logout" />,
+    "Register": <PersonAddIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Register" />,
 }
 
 const getIcon = (name) => icon[name];
