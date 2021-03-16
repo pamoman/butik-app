@@ -18,6 +18,7 @@ import MessageSystem from "components/messageSystem/MessageSystem";
 import Header from 'components/header/Header';
 import Footer from 'components/footer/Footer';
 import Start from 'components/start/Start';
+import Me from 'components/me/Me';
 
 // Auth components
 import Login from 'components/auth/Login';
@@ -44,6 +45,7 @@ const App = () => {
                                 <Header />
                                 <Switch>
                                     <PrivateRoute exact path="/" Component={Start} />
+                                    <PrivateRoute exact path="/me" Component={Me} />
                                     <PublicRoute exact path="/login" Component={Login} />
                                     <PrivateRoute exact path="/logout" Component={Logout} />
                                     <PublicRoute exact path="/register" Component={Register} />

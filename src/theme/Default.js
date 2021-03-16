@@ -327,6 +327,11 @@ const overrides = {
                     backgroundColor: global.palette.button.primary.background.main,
                 }
             },
+        },
+        MuiAvatar: {
+            colorDefault: {
+                backgroundColor: "none"
+            }
         }
     },
 };

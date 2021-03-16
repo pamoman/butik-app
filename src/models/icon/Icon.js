@@ -40,6 +40,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PersonIcon from '@material-ui/icons/Person';
 
 // Icon helper
 const icon = {
@@ -85,6 +86,7 @@ const icon = {
     "Plus": <AddCircleIcon fontSize="large" key="Plus" />,
     "Minus": <RemoveCircleIcon fontSize="large" key="Remove" />,
     "Cart": <ShoppingCartIcon fontSize="large" key="Remove" />,
+    "me": <PersonIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Me" />,
 }
 
 const getIcon = (name) => icon[name];
