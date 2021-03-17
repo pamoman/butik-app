@@ -36,12 +36,15 @@ export const CHECKOUT = gql`
             sale {
                 firstname
                 lastname
-                department
                 total
                 items {
                     name
                     quantity
                     price
+                }
+                department {
+                    id
+                    name
                 }
             }
         }

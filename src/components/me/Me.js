@@ -19,8 +19,7 @@ const Me = () => {
           [firstname, setFirstname] = useState(user.info.firstname),
           [lastname, setLastname] = useState(user.info.lastname),
           [email, setEmail] = useState(user.email),
-          [department, setDepartment] = useState(user.info.department.name),
-          [password, setPassword] = useState(""),
+          [department, setDepartment] = useState(user.info.department.id),
           [password1, setPassword1] = useState(""),
           [password2, setPassword2] = useState(""),
           [updateUser] = useUpdateUser(),
@@ -37,13 +36,13 @@ const Me = () => {
             firstname,
             lastname,
             email,
-            department: user.info.department.id
+            department
         };
 
         password2 && password1 === password2 && (data.password = password2);
 
-        updateUser(where, data);
-
+        updateUser(where, data)
+        .then(() => { setPassword1(""); setPassword2("") });
     };
 
     /*---- Data query start ----*/
@@ -104,7 +103,6 @@ const Me = () => {
                             />
 
                             <TextField
-                                className={classes.invoiceInput}
                                 id="department"
                                 name="department"
                                 label="Förvald Enhet"
@@ -120,25 +118,11 @@ const Me = () => {
                                 <option key={`bill-01`} value={"start"} disabled>Välj här</option>
 
                                 {data && data.departments.map((d, i) => (
-                                    <option key={`department-${i}`} value={d.name}>
+                                    <option key={`department-${i}`} value={d.id}>
                                         {d.name}
                                     </option>
                                 ))}
                             </TextField>
-
-                            <TextField
-                                className="password"
-                                id="person-password"
-                                name="password"
-                                label="Nuverande Pinkod"
-                                type={!check ? "password" : "text"}
-                                size="small"
-                                variant="filled"
-                                required
-                                value={password}
-                                onChange={(e) => /^[0-9]{0,4}$/.test(e.target.value) && setPassword(e.target.value)}
-                                InputProps={{ disableUnderline: true }}
-                            />
 
                             <TextField
                                 className="password"

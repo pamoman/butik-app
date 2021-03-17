@@ -18,8 +18,7 @@ const Checkout = () => {
           [user] = useUser(),
           [department] = useDepartment(),
           createSale = useCreateSale(),
-          currency = utils.currency,
-          quantity = utils.quantity;
+          currency = utils.currency;
     
     const calculateTotal = () => {
         return items.reduce((total, row) => total + (row.item.product.price * row.qty), 0);

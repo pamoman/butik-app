@@ -227,12 +227,22 @@ const overrides = {
             },
         },
         MuiFilledInput: {
+            root: {
+                "&$focused": {
+                    backgroundColor: global.palette.formInput.background,
+                    borderRadius: "0.4rem",
+                }
+            },
             input: {
                 borderRadius: "0.4rem",
                 backgroundColor: global.palette.formInput.background,
                 "&$disabled": {
                     borderRadius: 0,
                     backgroundColor: global.palette.formInput.disabled,
+                },
+                '&:hover:before': {
+                    backgroundColor: global.palette.formInput.background,
+                    borderRadius: "0.4rem",
                 },
             },
             underline: {

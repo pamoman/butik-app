@@ -42,7 +42,7 @@ const Selector = () => {
                 <option key={`bill-01`} value={"start"} disabled>Välj här</option>
 
                 {data && data.departments.map((d, i) => (
-                    <option key={`department-${i}`} value={d.name}>
+                    <option key={`department-${i}`} value={d.id}>
                         {d.name}
                     </option>
                 ))}

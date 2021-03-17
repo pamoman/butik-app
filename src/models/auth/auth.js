@@ -107,7 +107,7 @@ const useUserQuery = (redirect = false) => {
         onCompleted: (data) => {
             const user = data.me;
             const role = data.me.role.name;
-            const department = data.me.info.department.name;
+            const department = data.me.info.department.id;
 
             setUserRole(role);
             setUser(user);
