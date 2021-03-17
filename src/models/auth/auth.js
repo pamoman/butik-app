@@ -26,6 +26,7 @@ export const USER = gql`
                 firstname
                 lastname
                 department {
+                    id
                     name
                 }
             }
@@ -45,9 +46,25 @@ const REGISTER = gql`
     }
 `;
 
+const UPDATE_USER = gql`
+    mutation updateUser($input: updateUserInput!) {
+        updateUser(input: $input) {
+            user {
+                username
+                firstname
+                lastname
+                email
+                department {
+                    name
+                }
+            }
+        }
+    }
+`;
+
 export const useLoginMutation = () => {
     const [, setAuthToken, removeAuthtoken] = useAuthToken();
-    const [getUser] = useUserQuery();
+    const [getUser] = useUserQuery("/");
 
     const [mutation] = useMutation(LOGIN, {
         onCompleted: (data) => {
@@ -72,11 +89,11 @@ export const useLoginMutation = () => {
     return [login];
 };
 
-const useUserQuery = () => {
-    const [, setUserRole, removeUserRole] = useUserRole(),
-          [, setUser, removeUser] = useUser(),
-          [, setDepartment, removeDepartment] = useDepartment(),
-          [, setItems, removeItems] = useItems(),
+const useUserQuery = (redirect = false) => {
+    const [, setUserRole] = useUserRole(),
+          [, setUser] = useUser(),
+          [, setDepartment] = useDepartment(),
+          [, setItems] = useItems(),
           [token, , ] = useAuthToken();
 
     const [getUser] = useLazyQuery(USER, {
@@ -86,23 +103,18 @@ const useUserQuery = () => {
                 authorization: `Bearer ${token}`
             }
         },
+        fetchPolicy: "network-only",
         onCompleted: (data) => {
-            const role = data.me.role.name;
             const user = data.me;
+            const role = data.me.role.name;
+            const department = data.me.info.department.name;
 
-            removeUserRole();
             setUserRole(role);
-
-            removeUser();
             setUser(user);
-
-            removeDepartment();
-            setDepartment(user.info.department.name);
-
-            removeItems();
+            setDepartment(department);
             setItems([]);
 
-            window.location.href = "/";
+            redirect && (window.location.href = "/");
         },
         onError: err => {
             console.log(err);
@@ -121,7 +133,7 @@ export const useRegisterUser = () => {
             console.log(err);
             setMessage({ open: true, text: `Epostadressen eller taggen är redan registrerade!  Testa att logga in istället.`, severity: "error" });
         },
-        onCompleted: (data) => {
+        onCompleted: () => {
             window.location.href = "/login";
             setMessage({ open: true, text: `Nu kan du logga in!`, severity: "success" });
         }
@@ -132,4 +144,26 @@ export const useRegisterUser = () => {
     };
 
     return [registerUser];
+};
+
+export const useUpdateUser = () => {
+    const messageContext = useMessage(),
+          setMessage = messageContext.setMessage,
+          [getUser] = useUserQuery();
+
+    const [UpdateUserMutation] = useMutation(UPDATE_USER, {
+        onError: (err) => {
+            console.log(err);
+        },
+        onCompleted: () => {
+            getUser();
+            setMessage({ open: true, text: `Sparat!`, severity: "success" });
+        }
+    });
+
+    const updateUser = (where, data) => {
+        return UpdateUserMutation({ variables: { input: { where, data } } });
+    };
+
+    return [updateUser];
 };

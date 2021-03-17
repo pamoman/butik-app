@@ -15,9 +15,9 @@ const ITEMS = "items";
 export const useAuthToken = () => {
     const [cookies, setCookie, removeCookie] = useCookies([TOKEN_NAME]);
 
-    const setAuthToken = (authToken) => setCookie(TOKEN_NAME, authToken, { maxAge: 3600, sameSite: "lax", path: '/' });
+    const setAuthToken = (authToken) => setCookie(TOKEN_NAME, authToken, { maxAge: 3600, path: '/' });
 
-    const removeAuthToken = () => removeCookie(TOKEN_NAME, { sameSite: "lax" });
+    const removeAuthToken = () => removeCookie(TOKEN_NAME, { path: '/' });
 
     return [cookies[TOKEN_NAME], setAuthToken, removeAuthToken];
 };
@@ -25,9 +25,9 @@ export const useAuthToken = () => {
 export const useUserRole = () => {
     const [cookies, setCookie, removeCookie] = useCookies([USER_ROLE]);
 
-    const setUserRole = (isAdmin) => setCookie(USER_ROLE, isAdmin, { maxAge: 3600, sameSite: "lax", path: '/' });
+    const setUserRole = (isAdmin) => setCookie(USER_ROLE, isAdmin, { maxAge: 3600, path: '/' });
 
-    const removeUserRole = () => removeCookie(USER_ROLE, { sameSite: "lax" });
+    const removeUserRole = () => removeCookie(USER_ROLE, { path: '/' });
 
     return [cookies[USER_ROLE], setUserRole, removeUserRole];
 };
@@ -35,9 +35,9 @@ export const useUserRole = () => {
 export const useUser = () => {
     const [cookies, setCookie, removeCookie] = useCookies([USER_ROLE]);
 
-    const setUser = (user) => setCookie(USER, user, { maxAge: 3600, sameSite: "lax", path: '/' });
+    const setUser = (user) => setCookie(USER, user, { maxAge: 3600, path: '/' });
 
-    const removeUser = () => removeCookie(USER, { sameSite: "lax" });
+    const removeUser = () => removeCookie(USER, { path: '/' });
 
     return [cookies[USER], setUser, removeUser];
 };
@@ -45,9 +45,9 @@ export const useUser = () => {
 export const useDepartment = () => {
     const [cookies, setCookie, removeCookie] = useCookies([DEPARTMENT]);
 
-    const setDepartment = (department) => setCookie(DEPARTMENT, department, { maxAge: 3600, sameSite: "lax", path: '/' });
+    const setDepartment = (department) => setCookie(DEPARTMENT, department, { maxAge: 3600, path: '/' });
 
-    const removeDepartment = () => removeCookie(DEPARTMENT, { sameSite: "lax" });
+    const removeDepartment = () => removeCookie(DEPARTMENT, { path: '/' });
 
     return [cookies[DEPARTMENT], setDepartment, removeDepartment];
 };
@@ -55,9 +55,9 @@ export const useDepartment = () => {
 export const useItems = () => {
     const [cookies, setCookie, removeCookie] = useCookies([ITEMS]);
 
-    const setItems = (items) => setCookie(ITEMS, items, { maxAge: 3600, sameSite: "lax", path: '/' });
+    const setItems = (items) => setCookie(ITEMS, items, { maxAge: 3600, path: '/' });
 
-    const removeItems = () => removeCookie(ITEMS, { sameSite: "lax" });
+    const removeItems = () => removeCookie(ITEMS, { path: '/' });
 
     return [cookies[ITEMS], setItems, removeItems];
 };
@@ -66,6 +66,7 @@ export const useLogout = () => {
     const [, , removeAuthToken] = useAuthToken();
     const [, , removeUserRole] = useUserRole();
     const [, , removeUser] = useUser();
+    const [, , removeDepartment] = useDepartment();
     const [, , removeItems] = useItems();
     const apolloClient = useApolloClient();
 
@@ -75,6 +76,7 @@ export const useLogout = () => {
         removeAuthToken();
         removeUserRole();
         removeUser();
+        removeDepartment();
         removeItems();
 
         window.location.href = "/login";
