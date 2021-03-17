@@ -41,7 +41,7 @@ const Navbar = () => {
         
     return (
         <nav className={classes.nav}>
-            <PrivateNav to="/" activeClassName="selected-nav" isActive={ checkActiveRoot } name={NavIcon("Shop", "Handla")} />
+            <PrivateNav to="/" activeClassName="selected-nav" isActive={ checkActiveRoot } name={NavIcon("Basket", "Handla")} />
             <PrivateNav to="/me" className="auth" activeClassName="selected-nav" name={NavIcon("Me", "Mitt Konto")} />
             <PrivateNav to="/logout" activeClassName="selected-nav" name={NavIcon("Logout", "Logga Ut")} />
             {!isAuth && <PublicNav to="/register" className="auth" activeClassName="selected-nav" name={NavIcon("Register", "Registrera")} />}

@@ -46,6 +46,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import CropFreeIcon from '@material-ui/icons/CropFree';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 
 // Icon helper
 const icon = {
@@ -90,9 +91,9 @@ const icon = {
     "Generate": <LibraryAddIcon fontSize="large" key="Generate" />,
     "Plus": <AddCircleIcon fontSize="large" key="Plus" />,
     "Minus": <RemoveCircleIcon fontSize="large" key="Remove" />,
-    "Cart": <ShoppingCartIcon fontSize="large" key="Remove" />,
+    "Cart": <ShoppingCartIcon fontSize="large" key="Cart" />,
+    "Basket": <ShoppingBasketIcon fontSize="large" key="Basket" />,
     "Me": <PersonIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Me" />,
-    "Shop": <ShoppingCartIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Shop" />,
     "Login": <VpnKeyIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Login" />,
     "Logout": <ExitToAppIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Logout" />,
     "Register": <PersonAddIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Register" />,

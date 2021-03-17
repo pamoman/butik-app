@@ -58,7 +58,7 @@ const Basket = () => {
             <Typography variant="h3" align="center" gutterBottom>
                 {`Min korg: `}
                 <Badge badgeContent={items.length} color="error">
-                    { getIcon("Shop") }
+                    { getIcon("Basket") }
                 </Badge>
             </Typography>
 

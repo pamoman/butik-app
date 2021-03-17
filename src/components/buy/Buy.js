@@ -29,9 +29,9 @@ const Buy = () => {
             </Grid>
 
             <Grid container spacing={4} className="page">
-                <Grid item xs={6}><Scan /></Grid>
+                <Grid item xs={12} sm={6}><Scan /></Grid>
 
-                <Grid item xs={6}><Checkout /></Grid>
+                <Grid item xs={12} sm={6}><Checkout /></Grid>
 
                 <Grid item xs={12}><Basket /></Grid>
             </Grid>
