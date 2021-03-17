@@ -44,6 +44,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import CropFreeIcon from '@material-ui/icons/CropFree';
+import CreditCardIcon from '@material-ui/icons/CreditCard';
 
 // Icon helper
 const icon = {
@@ -94,6 +96,8 @@ const icon = {
     "Login": <VpnKeyIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Login" />,
     "Logout": <ExitToAppIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Logout" />,
     "Register": <PersonAddIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Register" />,
+    "Scan": <CropFreeIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Scan" />,
+    "Pay": <CreditCardIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Pay" />,
 }
 
 const getIcon = (name) => icon[name];

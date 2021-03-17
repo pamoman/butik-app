@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme => {
             },
         },
         CardContent: {
+            minHeight: "6rem",
             "& h5": {
                 fontWeight: "bold"
             }
@@ -56,6 +57,9 @@ const useStyles = makeStyles(theme => {
             borderTop: `1px solid ${theme.palette.border.primary.main}`,
             padding: "1rem"
         },
+        barcode: {
+            width: "100%"
+        }
     }
 });
 

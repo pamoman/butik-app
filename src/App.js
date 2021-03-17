@@ -31,7 +31,7 @@ import PrivateRoute from 'components/auth/PrivateRoute';
 
 const App = () => {
     const apolloClient = useAppApolloClient();
-    const [message, setMessage] = useState({ open: false, text: "", severity: "" });
+    const [message, setMessage] = useState({ open: false, text: "", severity: "success" });
 
     return (
         <ThemeProvider theme={theme}>

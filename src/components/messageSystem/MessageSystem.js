@@ -22,14 +22,14 @@ const MessageSystem = () => {
 
     const errorClose = (event, reason) => {
 
-        setMessage({ text: "", severity: "", open: false });
+        setMessage({ text: "", open: false });
     };
 
     return (
         <Snackbar
             className={classes.messageContainer}
             open={open}
-            autoHideDuration={3000}
+            autoHideDuration={5000}
             onClose={errorClose}
         >
             <Alert className={classes.message} onClose={errorClose} severity={severity}>

@@ -7,6 +7,7 @@ import getIcon from 'models/icon/Icon';
 import utils from 'models/utils/utils';
 import { useItems } from "config/auth";
 import { useUser } from "config/auth";
+import { useDepartment } from "config/auth";
 import { useCreateSale } from 'models/buy/buy.js';
 import { Typography, Button, Card, CardHeader, Tooltip, CardContent, CardActions } from '@material-ui/core';
 import useStyles from './Styles';
@@ -15,6 +16,7 @@ const Checkout = () => {
     const classes = useStyles(),
           [items] = useItems(),
           [user] = useUser(),
+          [department] = useDepartment(),
           createSale = useCreateSale(),
           currency = utils.currency,
           quantity = utils.quantity;
@@ -24,10 +26,9 @@ const Checkout = () => {
     };
 
     const checkoutNow = () => {
-        console.log(user.info.department.name);
-        /* createSale({
+        createSale({
             data: {
-                department: user.info.department.name,
+                department,
                 firstname: user.info.firstname,
                 lastname: user.info.lastname,
                 total: calculateTotal(),
@@ -40,7 +41,7 @@ const Checkout = () => {
                     }
                 })
             }
-        }) */
+        })
     };
 
     return (
@@ -49,17 +50,13 @@ const Checkout = () => {
                 className={classes.cardHeader}
                 title={
                     <Typography variant="h5">
-                        {getIcon("Cart")}
+                        {getIcon("Pay")}
                     </Typography>
                 }
             />
 
             <CardContent className={classes.CardContent}>
-                <Typography variant="h5">
-                    {`Antal produkter: ${quantity(items.length)}`}
-                </Typography>
-
-                <Typography variant="h5">
+                <Typography variant="h4" align="center">
                     {`Summa: ${currency(calculateTotal())}`}
                 </Typography>
             </CardContent>

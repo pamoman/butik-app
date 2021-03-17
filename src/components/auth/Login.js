@@ -34,7 +34,7 @@ const Login = () => {
                 console.log(error);
                 setMessage({ open: true, text: "Ogiltid epost eller lösenord!", severity: "error" });
             });
-    }
+    };
 
     return (
         <Grid container className="page-container">

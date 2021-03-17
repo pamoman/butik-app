@@ -2,13 +2,13 @@
  * Auth - config
  */
 
-import { useHistory } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 import { useCookies } from 'react-cookie';
 
 const TOKEN_NAME = "authToken";
 const USER_ROLE = "userRole";
 const USER = "user";
+const DEPARTMENT = "department";
 const ITEMS = "items";
 
 // custom hook to handle authToken - we use compositon to decouple the auth system and it's storage
@@ -42,6 +42,16 @@ export const useUser = () => {
     return [cookies[USER], setUser, removeUser];
 };
 
+export const useDepartment = () => {
+    const [cookies, setCookie, removeCookie] = useCookies([DEPARTMENT]);
+
+    const setDepartment = (department) => setCookie(DEPARTMENT, department, { maxAge: 3600, sameSite: "lax", path: '/' });
+
+    const removeDepartment = () => removeCookie(DEPARTMENT, { sameSite: "lax" });
+
+    return [cookies[DEPARTMENT], setDepartment, removeDepartment];
+};
+
 export const useItems = () => {
     const [cookies, setCookie, removeCookie] = useCookies([ITEMS]);
 
@@ -58,7 +68,6 @@ export const useLogout = () => {
     const [, , removeUser] = useUser();
     const [, , removeItems] = useItems();
     const apolloClient = useApolloClient();
-    const history = useHistory();
 
     const logout = async () => {
         await apolloClient.clearStore();
@@ -68,8 +77,7 @@ export const useLogout = () => {
         removeUser();
         removeItems();
 
-        history.push("/login");
-        window.location.reload();
+        window.location.href = "/login";
     };
 
     return logout;

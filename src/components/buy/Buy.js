@@ -2,16 +2,25 @@
  * Buy
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Scan from 'components/scan/Scan';
 import Basket from 'components/basket/Basket';
 import Checkout from 'components/checkout/Checkout';
+import { useUser } from "config/auth";
+import { useMessage } from 'components/messageSystem/Message';
 import { Grid, Typography } from '@material-ui/core';
 import useStyles from './Styles';
 
 const Buy = () => {
     const title = "Handla",
+          [user] = useUser(),
+          messageContext = useMessage(),
+          setMessage = messageContext.setMessage,
           classes = useStyles();
+    
+    useEffect(() => {
+        setMessage({ open: true, text: `Hej ${user.info.firstname}! Ta skannern till höger och börja handla!`, severity: "success" });
+    }, [])
 
     return (
         <Grid container className="page-container">

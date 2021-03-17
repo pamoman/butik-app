@@ -2,10 +2,9 @@
  * Graphql - Auth
  */
 
-import { useHistory } from 'react-router-dom';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import { useMessage } from 'components/messageSystem/Message';
-import { useAuthToken, useUserRole, useUser, useItems } from "config/auth";
+import { useAuthToken, useUserRole, useUser, useDepartment, useItems } from "config/auth";
 
 const LOGIN = gql`
     mutation login($login: String!, $password: String!) {
@@ -76,9 +75,9 @@ export const useLoginMutation = () => {
 const useUserQuery = () => {
     const [, setUserRole, removeUserRole] = useUserRole(),
           [, setUser, removeUser] = useUser(),
+          [, setDepartment, removeDepartment] = useDepartment(),
           [, setItems, removeItems] = useItems(),
-          [token, , ] = useAuthToken(),
-          history = useHistory();
+          [token, , ] = useAuthToken();
 
     const [getUser] = useLazyQuery(USER, {
         // Adding the authToken manually, cookie not ready in login function
@@ -97,11 +96,13 @@ const useUserQuery = () => {
             removeUser();
             setUser(user);
 
+            removeDepartment();
+            setDepartment(user.info.department.name);
+
             removeItems();
             setItems([]);
 
-            history.push("/");
-            window.location.reload();
+            window.location.href = "/";
         },
         onError: err => {
             console.log(err);
@@ -113,8 +114,7 @@ const useUserQuery = () => {
 
 export const useRegisterUser = () => {
     const messageContext = useMessage(),
-          setMessage = messageContext.setMessage,
-          history = useHistory();
+          setMessage = messageContext.setMessage;
 
     const [RegisterUserMutation] = useMutation(REGISTER, {
         onError: (err) => {
@@ -122,7 +122,7 @@ export const useRegisterUser = () => {
             setMessage({ open: true, text: `Epostadressen eller taggen är redan registrerade!  Testa att logga in istället.`, severity: "error" });
         },
         onCompleted: (data) => {
-            history.push("/login");
+            window.location.href = "/login";
             setMessage({ open: true, text: `Nu kan du logga in!`, severity: "success" });
         }
     });

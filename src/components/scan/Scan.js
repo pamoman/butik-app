@@ -69,14 +69,14 @@ const Scan = () => {
                 className={classes.cardHeader}
                 title={
                     <Typography variant="h5">
-                        {getIcon("Cart")}
+                        {getIcon("Scan")}
                     </Typography>
                 }
             />
 
             <CardContent className={classes.CardContent}>
                 <TextField
-                    className={classes.invoiceInput}
+                    className={classes.barcode}
                     id="barcode"
                     name="barcode"
                     label="Streckkod"
@@ -95,7 +95,7 @@ const Scan = () => {
                     title=
                     {
                         <Typography variant="body1">
-                            Ta bort alla produkter
+                            Ta bort alla produkter från din korg
                         </Typography>
                     }
                 >
@@ -106,7 +106,7 @@ const Scan = () => {
                         startIcon={getIcon("Delete")}
                         onClick={() => { setBarcode(""); setItems([])}}
                     >
-                        Rensa
+                        Rensa korgen
                     </Button>
                 </Tooltip>
             </CardActions>
