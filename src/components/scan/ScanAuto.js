@@ -21,14 +21,14 @@ const ScanAuto = () => {
                 className={classes.cardHeader}
                 title={
                     <Typography variant="h5">
-                        { getIcon("Basket") }
+                        { getIcon("Scan") }
                     </Typography>
                 }
             />
 
             <CardContent className={classes.CardContent}>
                 <Typography variant="h5" align="center">
-                    
+                    Skanna dina produkter
                 </Typography>
 
                 <BarcodeReader
@@ -42,7 +42,7 @@ const ScanAuto = () => {
                     title=
                     {
                         <Typography variant="body1">
-                            Ta bort alla produkter från din korg
+                            Ta bort alla produkter från din korg och börja om
                         </Typography>
                     }
                 >
@@ -50,10 +50,10 @@ const ScanAuto = () => {
                         className={classes.invoiceButton}
                         color="primary"
                         variant="contained"
-                        startIcon={getIcon("Delete")}
+                        startIcon={getIcon("Refresh")}
                         onClick={() => setItems([])}
                     >
-                        Rensa korgen
+                        Börja om
                     </Button>
                 </Tooltip>
             </CardActions>

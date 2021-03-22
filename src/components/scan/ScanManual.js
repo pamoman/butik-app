@@ -11,6 +11,7 @@ import useStyles from './Styles';
 
 const ScanManual = () => {
     const classes = useStyles(),
+          [_, setItems] = useItems(),
           [barcodeInput, setBarcodeInput] = useState(""),
           [loadProduct] = useLoadProduct();
 
@@ -20,7 +21,7 @@ const ScanManual = () => {
                 className={classes.cardHeader}
                 title={
                     <Typography variant="h5">
-                        {getIcon("Scan")}
+                        {getIcon("Manual")}
                     </Typography>
                 }
             />
@@ -45,7 +46,7 @@ const ScanManual = () => {
                     title=
                     {
                         <Typography variant="body1">
-                            Rensa skreckod fältet
+                            Ta bort alla produkter från din korg och börja om
                         </Typography>
                     }
                 >
@@ -53,10 +54,10 @@ const ScanManual = () => {
                         className={classes.invoiceButton}
                         color="primary"
                         variant="contained"
-                        startIcon={getIcon("Delete")}
-                        onClick={() => setBarcodeInput("")}
+                        startIcon={getIcon("Refresh")}
+                        onClick={() => setItems([])}
                     >
-                        Rensa
+                        Börja om
                     </Button>
                 </Tooltip>
             </CardActions>

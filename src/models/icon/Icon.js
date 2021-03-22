@@ -47,6 +47,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import CropFreeIcon from '@material-ui/icons/CropFree';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import KeyboardIcon from '@material-ui/icons/Keyboard';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 // Icon helper
 const icon = {
@@ -99,6 +101,8 @@ const icon = {
     "Register": <PersonAddIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Register" />,
     "Scan": <CropFreeIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Scan" />,
     "Pay": <CreditCardIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Pay" />,
+    "Manual": <KeyboardIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Manual" />,
+    "Refresh": <RefreshIcon fontSize="large" style={{ backgroundColor: "inherit" }} key="Refresh" />,
 }
 
 const getIcon = (name) => icon[name];
