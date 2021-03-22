@@ -342,6 +342,11 @@ const overrides = {
             colorDefault: {
                 backgroundColor: "none"
             }
+        },
+        MuiTabPanel: {
+            root: {
+                padding: 0
+            }
         }
     },
 };

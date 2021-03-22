@@ -7,8 +7,8 @@ import getIcon from 'models/icon/Icon';
 import utils from 'models/utils/utils';
 import { useItems } from "config/auth";
 import {
-    Box, Badge, Typography, TextField, ButtonGroup, IconButton,
-    Table, TableBody, TableCell, TableContainer, TableHead, TableRow
+    Badge, Typography, TextField, ButtonGroup, IconButton, Table,
+    TableBody, TableCell, TableContainer, TableHead, TableRow
 } from '@material-ui/core';
 
 const Basket = () => {
