@@ -42,7 +42,7 @@ export const useLoadProduct = () => {
             if (data.barcodes && data.barcodes.length > 0) {
                 let newItem = data.barcodes[0];
                 
-                items.push({
+                items.unshift({
                     item: newItem, qty: newItem.qty
                 });
     

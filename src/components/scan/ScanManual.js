@@ -38,6 +38,7 @@ const ScanManual = () => {
                     InputProps={{ disableUnderline: true }}
                     onChange={e => setBarcodeInput(e.target.value)}
                     onKeyPress={e => e.key === "Enter" && loadProduct({ value: barcodeInput, onSuccess: () => setBarcodeInput("")})}
+                    autoFocus={true}
                 />
             </CardContent>
 

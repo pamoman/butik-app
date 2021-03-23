@@ -7,11 +7,11 @@ import { useItems } from "config/auth";
 import { useLoadProduct } from 'models/load/Load';
 import BarcodeReader from 'react-barcode-reader';
 import getIcon from 'models/icon/Icon';
-import { Badge, Typography, Button, Card, CardHeader, Tooltip, CardContent, CardActions } from '@material-ui/core';
+import { Typography, Button, Card, CardHeader, Tooltip, CardContent, CardActions } from '@material-ui/core';
 import useStyles from './Styles';
 
 const ScanAuto = () => {
-    const [items, setItems] = useItems(),
+    const [_, setItems] = useItems(),
           classes = useStyles(),
           [loadProduct] = useLoadProduct();
 

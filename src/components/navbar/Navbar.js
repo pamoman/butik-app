@@ -6,7 +6,7 @@ import React from 'react';
 import PublicNav from './PublicNav';
 import PrivateNav from './PrivateNav';
 import { AuthCheck } from "components/auth/auth";
-import { Box, Avatar, Tooltip, Typography, LinkIcon } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import getIcon from 'models/icon/Icon';
 import useStyles from './Styles';
 

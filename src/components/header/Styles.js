@@ -36,9 +36,9 @@ const useStyles = makeStyles(theme => {
             },
         },
         siteLogo: {
-            height: "50px",
-            marginRight: "1rem",
-            borderRadius: "1rem",
+            height: "65px",
+            marginRight: "8px",
+            borderRadius: "5px",
         },
     }
 });

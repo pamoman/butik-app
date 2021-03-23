@@ -63,7 +63,7 @@ const Basket = () => {
             </Typography>
 
             <TableContainer className="table-container">
-                <Table className="table" aria-label="Person invoice table">
+                <Table className="table" aria-label="Customer Basket">
                     <TableHead>
                         <TableRow>
                             <TableCell width="10%"></TableCell>

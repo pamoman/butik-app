@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import banner from 'assets/img/banners/start.jpg';
 
 /*
  * Create the global Theme
@@ -149,10 +150,21 @@ const overrides = {
                     flexWrap: "wrap",
                     width: "100%",
                     height: "200px",
-                    paddingLeft: "2rem",
-                    paddingRight: "2rem",
                     textAlign: "center",
                     backgroundColor: global.palette.background.main,
+                    backgroundImage: `url(${banner})`,
+                    backgroundPosition: "50% 65%",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    "& h1": {
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "rgb(0, 0, 0, 0.6)",
+                        color: global.palette.primary.main,
+                        width: "100%",
+                        height: "100%"
+                    }
                 },
                 ".gutter-bottom": {
                     marginBottom: global.spacing(4),
