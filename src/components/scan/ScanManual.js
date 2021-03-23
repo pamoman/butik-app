@@ -5,13 +5,14 @@
 import React, { useState } from 'react';
 import { useItems } from "config/auth";
 import { useLoadProduct } from 'models/load/Load';
+import AlertButton from 'components/alert/AlertButton';
 import getIcon from 'models/icon/Icon';
 import { TextField, Typography, Button, Card, CardHeader, Tooltip, CardContent, CardActions } from '@material-ui/core';
 import useStyles from './Styles';
 
 const ScanManual = () => {
     const classes = useStyles(),
-          [_, setItems] = useItems(),
+          [items, setItems] = useItems(),
           [barcodeInput, setBarcodeInput] = useState(""),
           [loadProduct] = useLoadProduct();
 
@@ -43,24 +44,14 @@ const ScanManual = () => {
             </CardContent>
 
             <CardActions className={classes.cardActions} disableSpacing>
-                <Tooltip
-                    title=
-                    {
-                        <Typography variant="body1">
-                            Ta bort alla produkter från din korg och börja om
-                        </Typography>
-                    }
-                >
-                    <Button
-                        className={classes.invoiceButton}
-                        color="primary"
-                        variant="contained"
-                        startIcon={getIcon("Refresh")}
-                        onClick={() => setItems([])}
-                    >
-                        Börja om
-                    </Button>
-                </Tooltip>
+                <AlertButton
+                    buttonTitle="Börja om"
+                    alertTitle="Rensa korgen?"
+                    description="Är du säkert att du vill ta bort alla produkter från din korg och börja om?"
+                    icon={getIcon("Refresh")}
+                    onAccept={() => setItems([])}
+                    disabled={!items.length}
+                />
             </CardActions>
         </Card>
     )

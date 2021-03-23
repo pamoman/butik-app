@@ -9,7 +9,8 @@ import { useItems } from "config/auth";
 import { useUser } from "config/auth";
 import { useDepartment } from "config/auth";
 import { useCreateSale } from 'models/buy/buy.js';
-import { Typography, Button, Card, CardHeader, Tooltip, CardContent, CardActions } from '@material-ui/core';
+import AlertButton from 'components/alert/AlertButton';
+import { Typography, Card, CardHeader, CardContent, CardActions } from '@material-ui/core';
 import useStyles from './Styles';
 
 const Checkout = () => {
@@ -61,30 +62,17 @@ const Checkout = () => {
             </CardContent>
 
             <CardActions className={classes.cardActions} disableSpacing>
-                <Tooltip
-                    title=
-                    {
-                        <Typography variant="body1">
-                            Bekräfta ditt köp
-                        </Typography>
-                    }
-                >
-                    <div>
-                        <Button
-                            className={classes.invoiceButton}
-                            color="primary"
-                            variant="contained"
-                            startIcon={getIcon("Save")}
-                            onClick={checkoutNow}
-                            disabled={!items.length}
-                        >
-                            Köp
-                        </Button>
-                    </div>
-                </Tooltip>
+                <AlertButton
+                    buttonTitle="Köp"
+                    alertTitle="Bekräfta ditt köp"
+                    description="Du kommer nu att avsluta din köp, är du verkligen klar?"
+                    icon={getIcon("Save")}
+                    disabled={!items.length}
+                    onAccept={checkoutNow}
+                />
             </CardActions>
         </Card>
     )
-}
+};
 
 export default Checkout;

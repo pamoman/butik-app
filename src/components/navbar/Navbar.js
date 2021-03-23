@@ -37,7 +37,7 @@ const Navbar = () => {
                 </Typography>
             </Box>
         )
-    }
+    };
         
     return (
         <nav className={classes.nav}>
