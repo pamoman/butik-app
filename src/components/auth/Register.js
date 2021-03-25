@@ -5,15 +5,17 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useLoadingEffect } from "components/loading/Loading";
-import { useHistory } from 'react-router-dom';
-import { useMessage } from 'components/messageSystem/Message';
 import { DEPARTMENTS } from 'models/buy/buy.js';
 import { useRegisterUser } from 'models/auth/auth.js';
-import { Grid, Typography, FormControlLabel, Checkbox, Button, TextField } from '@material-ui/core';
+import BarcodeReader from 'react-barcode-reader';
+import scanTag from 'assets/img/scan-tag.png';
+import getIcon from 'models/icon/Icon';
+import { Grid, Box, Typography, FormControlLabel, Checkbox, Button, TextField } from '@material-ui/core';
 import useStyles from './Styles';
 
 const Register = () => {
     const title = "Registrera",
+          [tag, setTag] = useState(false),
           [check, setCheck] = useState(false),
           [department, setDepartment] = useState("start"),
           [password1, setPassword1] = useState(""),
@@ -27,7 +29,7 @@ const Register = () => {
         const formData = new FormData(e.target);
 
         let data = {
-            "username": formData.get("username"),
+            "username": tag,
             "firstname": formData.get("firstname"),
             "lastname": formData.get("lastname"),
             "email": formData.get("email"),
@@ -55,21 +57,23 @@ const Register = () => {
             </Grid>
 
             <Grid container spacing={4} justify="center" className="page">
-                <Grid container spacing={4} justify="center" className="page">
+                {!tag ?
+                    <Grid item xs={12} sm={6}>
+                        <BarcodeReader
+                            onError={value => setTag(value)}
+                        />
+                        
+                        <Typography variant="h3" align="center" gutterBottom>
+                            Skanna din tagg
+                        </Typography>
+
+                        <Box className={classes.tag}>
+                            <img src={scanTag} alt="Tag" />
+                        </Box>
+                    </Grid>
+                    :
                     <Grid item xs={12} sm={6}>
                         <form className="form" onSubmit={register}>
-                            <TextField
-                                id="person-username"
-                                name="username"
-                                label="Tag"
-                                type="text"
-                                size="small"
-                                variant="filled"
-                                required
-                                InputProps={{ disableUnderline: true }}
-                                autoFocus={true}
-                            />
-
                             <TextField
                                 id="person-firstname"
                                 name="firstname"
@@ -79,6 +83,7 @@ const Register = () => {
                                 variant="filled"
                                 required
                                 InputProps={{ disableUnderline: true }}
+                                autoFocus={true}
                             />
 
                             <TextField
@@ -150,23 +155,33 @@ const Register = () => {
                                 variant="filled"
                                 required
                                 value={password2}
-                                error={password1 !== password2}
+                                error={password2 && password2.length === 4 && password1 !== password2}
                                 onChange={(e) => /^[0-9]{0,4}$/.test(e.target.value) && setPassword2(e.target.value)}
                                 InputProps={{ disableUnderline: true }}
                             />
 
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={check}
-                                        onChange={() => setCheck(!check)}
-                                        name="checkedB"
-                                        style={{ color: "white" }}
-                                    />
-                                }
-                                label={`${check ? "Dölja" : "Visa"} pinkod`}
-                            />
-                            
+                            <Box className={classes.spreadBox}>
+                                <Button
+                                    className="backToScan"
+                                    startIcon={getIcon("LeftArrow")}
+                                    onClick={() => setTag("")}
+                                >
+                                    Tillbaka
+                                </Button>
+
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={check}
+                                            onChange={() => setCheck(!check)}
+                                            name="checkedB"
+                                            style={{ color: "white" }}
+                                        />
+                                    }
+                                    label={"Visa pinkod"}
+                                />
+                            </Box>
+
                             <Button
                                 name="login"
                                 type="submit"
@@ -179,7 +194,7 @@ const Register = () => {
                             </Button>
                         </form>
                     </Grid>
-                </Grid>
+                }
             </Grid>
         </Grid>
     )

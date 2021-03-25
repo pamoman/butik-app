@@ -32,7 +32,7 @@ const Forgot = () => {
                 }
 
                 setEmail("");
-                setMessage({ open: true, text: "En epost har skickats till dig!", severity: "success" });
+                setMessage({ open: true, text: "En epost har skickats till dig!  Följa instruktionerna för att återställa din pinkod.", severity: "success" });
 
                 return true;
             });

@@ -11,8 +11,9 @@ import useStyles from './Styles';
 
 const Reset = () => {
     const title = "Återställ pinkod",
-          [hidden, setHidden] = useState(true),
-          [check, setCheck] = useState(true),
+          [check, setCheck] = useState(false),
+          [password1, setPassword1] = useState(""),
+          [password2, setPassword2] = useState(""),
           code = new URLSearchParams(useLocation().search).get("code"),
           messageContext = useMessage(),
           setMessage = messageContext.setMessage,
@@ -44,11 +45,6 @@ const Reset = () => {
             });
     };
 
-    const toggleShowPassword = () => {
-        setHidden(!hidden);
-        setCheck(!check);
-    }
-
     return (
         <Grid container className="page-container">
             <Grid item xs={12} className={`banner ${classes.pageBanner}`}>
@@ -57,18 +53,35 @@ const Reset = () => {
 
             <Grid container spacing={4} alignContent="center" justify="center" className="page">
                 <Grid item xs={12} md={6}>
-                    <h2 className="center">Skriv ditt nya pinkod nedan.</h2>
+                    <h2 className="center">Skriv en ny pinkod nedan.</h2>
 
                     <form className="form" onSubmit={registerSubmit}>
                         <TextField
                             className="password"
-                            id="person-password"
+                            id="person-password-1"
                             name="password"
-                            label="Nya pinkod"
+                            label="Ny pinkod"
+                            type={!check ? "password" : "text"}
                             size="small"
                             variant="filled"
-                            type={hidden ? "password" : "text"}
                             required
+                            value={password1}
+                            onChange={(e) => /^[0-9]{0,4}$/.test(e.target.value) && setPassword1(e.target.value)}
+                            InputProps={{ disableUnderline: true }}
+                        />
+
+                        <TextField
+                            className="password"
+                            id="person-password-2"
+                            name="password2"
+                            label="Bekräfta Pinkod"
+                            type={!check ? "password" : "text"}
+                            size="small"
+                            variant="filled"
+                            required
+                            value={password2}
+                            error={password2 && password2.length === 4 && password1 !== password2}
+                            onChange={(e) => /^[0-9]{0,4}$/.test(e.target.value) && setPassword2(e.target.value)}
                             InputProps={{ disableUnderline: true }}
                         />
 
@@ -76,12 +89,12 @@ const Reset = () => {
                             control={
                                 <Checkbox
                                     checked={check}
-                                    onChange={toggleShowPassword}
+                                    onChange={() => setCheck(!check)}
                                     name="checkedB"
                                     style={{ color: "white" }}
                                 />
                             }
-                            label={`${check ? "Visa" : "Dölja"} pinkod`}
+                            label={"Visa pinkod"}
                         />
 
                         <Button
@@ -90,6 +103,7 @@ const Reset = () => {
                             color="primary"
                             size="large"
                             variant="contained"
+                            disabled={password1 !== password2}
                         >
                             Bekräfta
                         </Button>

@@ -47,8 +47,7 @@ const Login = () => {
             </Grid>
 
             <Grid container spacing={4} justify="center" className="page">
-                {!tag
-                    ?
+                {!tag ?
                     <Grid item xs={12} sm={6}>
                         <BarcodeReader
                             onError={value => setTag(value)}
@@ -90,7 +89,7 @@ const Login = () => {
                                     startIcon={getIcon("LeftArrow")}
                                     onClick={() => setTag("")}
                                 >
-                                    Till Start
+                                    Tillbaka
                                 </Button>
 
                                 <FormControlLabel
