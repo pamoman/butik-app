@@ -101,7 +101,7 @@ const Login = () => {
                                             style={{ color: "white" }}
                                         />
                                     }
-                                    label={`${check ? "Dölja" : "Visa"} pin`}
+                                    label="Visa pinkod"
                                 />
                             </Box>
 
